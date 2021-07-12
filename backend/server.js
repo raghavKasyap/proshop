@@ -21,7 +21,6 @@ app.use((err, req, res, next) => {
         message: err.message,
         stack: process.env.NODE_ENV === 'production' ? null : err.stack,
     })
-    next()
 })
 
 const port = process.env.PORT || 5000
