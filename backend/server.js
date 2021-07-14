@@ -3,10 +3,10 @@ import chalk from 'chalk'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import productRouter from './routes/productRoutes.js'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 dotenv.config()
 connectDB()
-
 const app = express()
 
 app.get('/', (req, res) => {
@@ -14,14 +14,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/products', productRouter)
-
-app.use((err, req, res, next) => {
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode
-    res.status(statusCode).json({
-        message: err.message,
-        stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-    })
-})
+app.use(notFound)
+app.use(errorHandler)
 
 const port = process.env.PORT || 5000
 
