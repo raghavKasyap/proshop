@@ -4,7 +4,7 @@ import Product from '../models/productModel.js'
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  public
-const getProducts = asyncHandler(async (req, res) => {
+const getProducts = asyncHandler(async (req, res, next) => {
     const products = await Product.find({})
     res.json(products)
 })
@@ -12,7 +12,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  public
-const getProductById = asyncHandler(async (req, res) => {
+const getProductById = asyncHandler(async (req, res, next) => {
     const product = await Product.findById(req.params.id)
     if (product) res.json(product)
     else {
